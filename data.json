@@ -1,0 +1,26 @@
+{
+  "allianceDuel": [
+    {"day": "Monday", "topic": "Vehicle Boost", "mustDo": ["15+ Boomers", "Radar Events"], "items": "Blueprints, Wrenches, Boomers"},
+    {"day": "Tuesday", "topic": "Shelter Upgrade", "mustDo": ["Orange Bounties Only"], "items": "Building Speedups, Refugees"},
+    {"day": "Wednesday", "topic": "Age of Science", "mustDo": ["Orange Trucks", "Badge Research"], "items": "Speedups, Badges, Orange Trucks"},
+    {"day": "Thursday", "topic": "Hero Initiative", "mustDo": ["Tickets & Gear"], "items": "O/P/B Fragments, Cores, Alloys"},
+    {"day": "Friday", "topic": "Holistic Growth", "mustDo": ["Training Speedups"], "items": "Training speed ups"},
+    {"day": "Saturday", "topic": "Enemy Buster", "mustDo": ["TvT 9 Chests"], "items": "PvP Only - No Items"}
+  ],
+  "researchOrder": [
+    "New Home",
+    "Elite Troops (alongside shelter building)",
+    "Hero Training",
+    "HQ Management",
+    "Military Strategies",
+    "Peace Shield",
+    "Siege to Seize"
+  ],
+  "heroFragments": [
+    {"source": "Danger lurks", "orange": 1, "purple": 5},
+    {"source": "Full preparedness", "orange": 2, "purple": 7},
+    {"source": "Weekly gift (10 Flowers)", "orange": 6, "purple": 0},
+    {"source": "Trade trucks", "orange": "4-8", "purple": 0},
+    {"source": "Saga zombies (Lv9)", "orange": 24, "purple": 0}
+  ]
+}
