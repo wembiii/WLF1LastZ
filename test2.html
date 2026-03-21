@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WLF1 Guide to Last Z</title>
+
+<style>
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  background: #0a0a0a;
+  color: #e5e5e5;
+  overflow-x: hidden;
+}
+
+/* PARALLAX BACKGROUND */
+.parallax {
+  position: fixed;
+  width: 100%; height: 120%; top: 0; left: 0;
+  background: radial-gradient(circle at center, #1a0000, #000000);
+  z-index: -2;
+}
+
+/* --- HEADER & BUTTON ALIGNMENT --- */
+header {
+  position: sticky; top: 0;
+  background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(12px);
+  padding: 15px; text-align: center;
+  border-bottom: 2px solid #ff3b3b; z-index: 1000;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+
+/* Discord Aligned in Header Bar */
+.discord-trigger {
+  position: absolute;
+  top: 50%; left: 25px;
+  transform: translateY(-50%);
+  z-index: 1100;
+  transition: transform 0.3s ease;
+}
+.discord-trigger img { width: 42px; height: auto; display: block; filter: drop-shadow(0 0 5px rgba(88,101,242,0.5)); }
+.discord-trigger:hover { transform: translateY(-50%) scale(1.15); }
+
+/* Rules Aligned in Header Bar */
+.rules-trigger {
+  position: absolute;
+  top: 50%; right: 25px;
+  transform: translateY(-50%);
+  z-index: 1100;
+  background: #ff3b3b; color: white; border: none;
+  padding: 8px 18px; border-radius: 4px;
+  font-weight: bold; font-size: 11px; cursor: pointer;
+  text-transform: uppercase; box-shadow: 0 0 15px rgba(255, 59, 59, 0.4);
+}
+
+.brand-title { 
+  font-size: 20px; color: #fff; 
+  text-transform: uppercase; 
+  text-shadow: 0 0 10px #ff3b3b; 
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+nav { display: flex; justify-content: center; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+nav button {
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #aaa; padding: 6px 14px; border-radius: 4px; cursor: pointer;
+  font-size: 10px; text-transform: uppercase; transition: 0.3s;
+}
+nav button:hover { background: rgba(255, 59, 59, 0.2); color: white; border-color: #ff3b3b; }
+
+/* --- HOME PAGE HERO --- */
+.hero { 
+  height: 80vh; 
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center; 
+  text-align: center; 
+}
+.hero h1 { 
+  font-size: clamp(48px, 8vw, 72px); 
+  color: #ff3b3b; 
+  margin: 0; 
+  text-transform: uppercase;
+  text-shadow: 0 0 40px rgba(255, 59, 59, 0.6);
+  font-weight: 900;
+}
+.hero p { 
+  color: #aaa; 
+  font-size: 22px; 
+  margin-top: 15px; 
+  letter-spacing: 2px;
+}
+
+/* --- SECTION ICONS --- */
+.section { padding: 100px 20px; max-width: 1150px; margin: auto; position: relative; }
+h2 { color: #ff3b3b; font-size: 32px; border-left: 5px solid #ff3b3b; padding-left: 15px; text-transform: uppercase; margin-bottom: 30px; }
+
+.bg-icon {
+  position: absolute;
+  top: 55%; left: 50%;
+  transform: translate(-50%, -50%) scale(0.7);
+  width: 500px; max-width: 95%; height: auto;
+  opacity: 0; z-index: -1; pointer-events: none;
+  transition: all 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.bg-icon.active {
+  opacity: 0.45;
+  transform: translate(-50%, -50%) scale(1.05);
+}
+
+.reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+.reveal.active { opacity: 1; transform: translateY(0); }
+
+.card { 
+  background: rgba(15, 15, 15, 0.6); 
+  backdrop-filter: blur(12px); 
+  border: 1px solid rgba(255, 255, 255, 0.1); 
+  padding: 35px; border-radius: 18px; margin-top: 25px; overflow-x: auto; 
+}
+
+/* TABLES & TEXT COLORS */
+table { width: 100%; border-collapse: collapse; min-width: 800px; font-size: 15px; }
+th, td { padding: 18px; text-align: left; border-bottom: 1px solid #222; }
+th { color: #ff3b3b; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; }
+
+.must-do-box { background: rgba(255, 59, 59, 0.15); padding: 5px 12px; border-radius: 4px; border: 1px solid rgba(255, 59, 59, 0.3); display: block; margin-bottom: 6px; }
+.orange-text { color: #ffa500; font-weight: bold; }
+.purple-text { color: #a335ee; font-weight: bold; }
+.blue-text { color: #00ccff; font-weight: bold; }
+.pro-tip { border: 1px dashed #ff3b3b; background: rgba(255, 59, 59, 0.05); padding: 25px; border-radius: 12px; margin-top: 20px; line-height: 1.6; }
+
+/* MODAL */
+.modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); }
+.modal-content { background: #111; margin: 8% auto; padding: 40px; border: 1px solid #ff3b3b; width: 90%; max-width: 450px; border-radius: 20px; position: relative; }
+.close-btn { position: absolute; top: 15px; right: 20px; color: #ff3b3b; font-size: 30px; cursor: pointer; }
+
+@media (max-width: 768px) {
+  .hero h1 { font-size: 42px; }
+  .discord-trigger { left: 10px; }
+  .rules-trigger { right: 10px; padding: 6px 10px; font-size: 9px; }
+  table { min-width: 650px; }
+}
+
+footer { text-align: center; padding: 80px; color: #444; font-size: 12px; letter-spacing: 2px; }
+</style>
+</head>
+
+<body>
+
+<div class="parallax" id="bg"></div>
+
+<header>
+  <a href="https://discord.gg/Gh6xmDKh5E" target="_blank" class="discord-trigger">
+    <img src="https://cdn.discordapp.com/attachments/1484902884846862536/1484950710595620988/icons8-discord-48.png?ex=69c0179e&is=69bec61e&hm=b139605051461748d5581e11244afd0e15758f95589d6b16c84e60ec26e736f9&" alt="Discord">
+  </a>
+  <div class="brand-title">THE WLF1 TEAM</div>
+  <button class="rules-trigger" onclick="toggleRules(true)">Clan Rules</button>
+  <nav>
+    <button onclick="go('alliance')">Alliance Duel</button>
+    <button onclick="go('preparedness')">Full Preparedness</button>
+    <button onclick="go('common')">Event Schedule</button>
+    <button onclick="go('combat')">Combat Development</button>
+    <button onclick="go('research')">Research</button>
+  </nav>
+</header>
+
+<div id="rulesModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="toggleRules(false)">&times;</span>
+    <h2 style="border:none; padding:0; text-align:center; margin-bottom:20px;">WLF1 Rules</h2>
+    <div style="line-height:2.2; font-size: 16px;">
+      <div>🤝 Speak with respect to all members.</div>
+      <div>🛡️ Inform R4 / R5 if you have questions related to rules.</div>
+      <div>💎 Donate daily to alliance tech.</div>
+      <div>🚫 NO farming on <span class="orange-text">RSN1, TDTE, MENA</span>.</div>
+      <div>🤐 Avoid World Chat drama at all costs.</div>
+    </div>
+  </div>
+</div>
+
+<section class="hero reveal">
+  <h1>Last Z Player Guide </h1>
+  <p>Play smart. Win consistently.</p>
+</section>
+
+<section id="alliance" class="section reveal">
+  <img src="https://media.discordapp.net/attachments/1484902884846862536/1484902958373273771/Dynamic_VS_logo_with_vibrant_sparks.png?ex=69bfeb25&is=69be99a5&hm=b15a10b504afd29700e500692437011a020a63e258f7aa85c502e4a2a5adf10f&=&format=webp&quality=lossless&width=968&height=968" class="bg-icon" id="icon-alliance">
+  <h2>Alliance Duel Schedule</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th style="width:15%">Day</th><th style="width:25%">Topic</th><th style="width:30%">Must Do</th><th>Points Items</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Monday</strong></td><td>Modded Vehicle Boost</td><td><span class="must-do-box">Do Boomers (over 15)</span><span class="must-do-box">Radar Events</span></td><td>Blueprints, wrenches, boomers, leopards, radar.</td></tr>
+        <tr><td><strong>Tuesday</strong></td><td>Shelter Upgrade</td><td><span class="must-do-box"><span class="orange-text">Orange Bounties only</span></span></td><td>Building Speedups, Recruit Refugees.</td></tr>
+        <tr><td><strong>Wednesday</strong></td><td>Age of Science</td><td><span class="must-do-box"><span class="orange-text">Orange Trucks</span> </span><span class="must-do-box">Badge Research</span></td><td>Research Speedups, Badges, Orange Trucks.</td></tr>
+        <tr><td><strong>Thursday</strong></td><td>Hero Initiative</td><td><span class="must-do-box">Tickets & Gear</span></td><td>Fragments, Power cores, Enhancement alloys.</td></tr>
+        <tr><td><strong>Friday</strong></td><td>Holistic Growth</td><td><span class="must-do-box">Training Speedups</span></td><td>Training speed ups, radar.</td></tr>
+        <tr><td><strong>Saturday</strong></td><td>Enemy Buster</td><td><span class="must-do-box">TvT till you reach all 9 Chests</span></td><td>TvT, Orange Trucks.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="preparedness" class="section reveal">
+  <img src="https://cdn.discordapp.com/attachments/1484902884846862536/1484902909752639498/image.png?ex=69bfeb19&is=69be9999&hm=e7a3b1697ab970de8199b7efb47806f506ee6343850cb0355c262c0016f23fef&" class="bg-icon" id="icon-preparedness">
+  <h2>Full Preparedness (Daily)</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>Topic</th><th>Point Source (6pts)</th><th>Summary</th></tr></thead>
+      <tbody>
+        <tr><td>Mod Vehicle</td><td class="orange-text">15 Daily Boomers</td><td>Save Wrenches/Blueprints for monday, only do boomers.</td></tr>
+        <tr><td>Shelter</td><td class="orange-text">Building speed ups</td><td>Focus Tuesday. Only complete Tuesdays if possible.</td></tr>
+        <tr><td>Science</td><td class="orange-text">Research speed ups</td><td>Focus Wednesday. Only complete Wednesdays if possible.</td></tr>
+        <tr><td>Army</td><td class="orange-text">Troop training</td><td>Must do daily. Save speed-ups for Friday.</td></tr>
+        <tr><td>Hero</td><td class="orange-text">Hero exp</td><td>Daily task. Don't overspend exp if #1 unreachable.</td></tr>
+      </tbody>
+    </table>
+    <div class="pro-tip"><strong>NOTE:</strong> You need <strong>18 points</strong> total. Complete 3 events (Troop training, Hero EXP, Boomers) to save resources.</div>
+  </div>
+</section>
+
+<section id="common" class="section reveal">
+  <h2>Schedule</h2>
+  <div class="card">
+    <h3 style="color:#ff3b3b; margin-top:0;">Event Cycle</h3>
+    <table>
+      <tbody>
+        <tr><td><strong class="orange-text">1st Week</strong></td><td>Fragments / Warrior Battle Pass / Camilla's Shop</td></tr>
+        <tr><td><strong class="orange-text">2nd Week</strong></td><td>Gacha Go / Dawn's Light (for wrenches)</td></tr>
+        <tr><td><strong class="orange-text">3rd Week</strong></td><td>Bullseye Booty (for speed ups/cores)</td></tr>
+        <tr><td><strong class="orange-text">4th Week</strong></td><td>Lucky Discounter (for badges/fuel)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="combat" class="section reveal">
+  <img src="https://media.discordapp.net/attachments/1484902884846862536/1484902934377533662/ChatGPT_Image_Mar_21_2026_06_46_37_AM_1.png?ex=69bfeb1f&is=69be999f&hm=00fe2f9d073dfecd9451fcfd2e9d753e01afde22d22e3097035748d968b64bcc&=&format=webp&quality=lossless" class="bg-icon" id="icon-combat">
+  <h2>Combat Development</h2>
+  <div class="card">
+    <h3 style="color:#ff3b3b; margin-top:0;">Hero Fragments</h3>
+    <ul style="line-height:2.2">
+      <li><strong>Danger lurks(Frostbanes):</strong> <span class="orange-text">x1 Orange Fragment</span>, <span class="purple-text">x5 Purple Fragments </span>(daily)</li>
+      <li><strong>Full preparedness:</strong> <span class="orange-text">x2 Orange Fragments</span>, <span class="purple-text">x7 Purple Fragments</span>(daily)</li>
+      <li><strong>Weekly gifting reward:</strong> Claim <span class="orange-text">x6 Orange Fragments</span> (Weekly, to claim go to Profile > Gift Box).</li>
+      <li><strong>Saga zombies Lvl 9:</strong> <span class="orange-text">x24 Orange Fragments</span> (weekly).</li>
+      <li><strong>Glory Shop:</strong> <span class="orange-text">x10 Orange Fragments</span> (weekly).</li>
+      <li><strong>Trucks:</strong> <span class="orange-text">x4~12 Orange Fragments</span> (daily). </li>
+    </ul>
+    <hr style="border:0; border-top:1px solid #333; margin:20px 0;">
+    <h3 style="color:#ff3b3b;">Orange Equipments</h3>
+    <p>Upgrade to <strong>Level 20 first &rarr; then Level 50.</strong></p>
+    <div class="pro-tip"><strong>Star Orbs:</strong> Complete the 1st star orb in <strong>ALL</strong> equipments before going for the 2nd star.</div>
+  </div>
+</section>
+
+<section id="research" class="section reveal">
+  <img src="https://media.discordapp.net/attachments/1484902884846862536/1484902991873052892/Futuristic_research_facility_with_geodesic_dome.png?ex=69bfeb2d&is=69be99ad&hm=589d0a3a479736c30b87eafa936dc9c5ebd4a66e91e123c9d4913e9365f65bed&=&format=webp&quality=lossless&width=1376&height=917" class="bg-icon" id="icon-research">
+  <h2>Research Priority</h2>
+  <div class="card">
+    <ol style="line-height:2.5; font-size: 16px;">
+      <li><strong>New Home</strong></li>
+      <li><strong>Elite Troops</strong> (alongside shelter building)</li>
+      <li><strong>Hero Training</strong></li>
+      <li><strong>HQ Management</strong></li>
+      <li><strong>Military Strategies</strong></li>
+      <li><strong>Peace Shield</strong></li>
+      <li><strong>Siege to Seize</strong></li>
+    </ol>
+    <div class="pro-tip" style="border-color:#ffa500"><strong class="orange-text">MANDATORY:</strong> Max out <span class="blue-text">ALLIANCE RECOGNITION</span>!</div>
+  </div>
+</section>
+
+<footer>© THE WLF1 TEAM 2026</footer>
+
+<script>
+function go(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
+function toggleRules(show) { document.getElementById("rulesModal").style.display = show ? "block" : "none"; }
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('active');
+    const iconId = "icon-" + entry.target.id;
+    const targetIcon = document.getElementById(iconId);
+    if (targetIcon) {
+      if (entry.isIntersecting) targetIcon.classList.add('active');
+      else targetIcon.classList.remove('active');
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+window.addEventListener("scroll", () => {
+  document.getElementById("bg").style.transform = "translateY(" + window.scrollY * 0.3 + "px)";
+});
+</script>
+
+</body>
+</html>
